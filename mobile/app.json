@@ -1,0 +1,1 @@
+{"expo":{"name":"KRMEET","slug":"krmeet","scheme":"krmeet","version":"1.0.0","orientation":"portrait","userInterfaceStyle":"dark","newArchEnabled":false,"plugins":["expo-dev-client","expo-location",["react-native-maps",{"requestLocationPermission":true,"locationPermission":"KRMEET usa tu ubicación para compartirla con tu grupo aprobado."}],"@livekit/react-native"]}}

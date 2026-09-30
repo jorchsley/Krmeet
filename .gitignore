@@ -1,0 +1,11 @@
+.env
+mobile/.env
+node_modules/
+mobile/node_modules/
+api/node_modules/
+api/dist/
+mobile/.expo/
+mobile/android/
+mobile/ios/
+*.log
+dir

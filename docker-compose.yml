@@ -1,0 +1,48 @@
+services:
+  postgres:
+    image: postgis/postgis:16-3.4
+    environment:
+      POSTGRES_DB: krmeet
+      POSTGRES_USER: krmeet
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-krmeet_dev}
+    ports: ["5432:5432"]
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./api/sql/schema.sql:/docker-entrypoint-initdb.d/001-schema.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U krmeet -d krmeet"]
+      interval: 5s
+      timeout: 3s
+      retries: 15
+
+  api:
+    build: ./api
+    environment:
+      PORT: 4000
+      DATABASE_URL: postgres://krmeet:${POSTGRES_PASSWORD:-krmeet_dev}@postgres:5432/krmeet
+      JWT_SECRET: ${JWT_SECRET:-change-me-before-deploy}
+      INSTAGRAM_APP_ID: ${INSTAGRAM_APP_ID:-}
+      INSTAGRAM_APP_SECRET: ${INSTAGRAM_APP_SECRET:-}
+      INSTAGRAM_REDIRECT_URI: ${INSTAGRAM_REDIRECT_URI:-http://localhost:4000/auth/instagram/callback}
+      APP_DEEP_LINK: ${APP_DEEP_LINK:-krmeet://auth}
+      LIVEKIT_URL: ${LIVEKIT_URL:-ws://localhost:7880}
+      LIVEKIT_API_KEY: ${LIVEKIT_API_KEY:-devkey}
+      LIVEKIT_API_SECRET: ${LIVEKIT_API_SECRET:-secret}
+      CORS_ORIGIN: ${CORS_ORIGIN:-*}
+    ports: ["4000:4000"]
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  livekit:
+    image: livekit/livekit-server:v1.8.4
+    command: ["--config", "/etc/livekit.yaml", "--dev"]
+    ports:
+      - "7880:7880/tcp"
+      - "7881:7881/tcp"
+      - "7882:7882/udp"
+    volumes:
+      - ./livekit.yaml:/etc/livekit.yaml:ro
+
+volumes:
+  postgres_data:

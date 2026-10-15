@@ -1,1 +1,24 @@
-{"expo":{"name":"KRMEET","slug":"krmeet","scheme":"krmeet","version":"1.0.0","orientation":"portrait","userInterfaceStyle":"dark","newArchEnabled":false,"plugins":["expo-dev-client","expo-location",["react-native-maps",{"requestLocationPermission":true,"locationPermission":"KRMEET usa tu ubicación para compartirla con tu grupo aprobado."}],"@livekit/react-native"]}}
+{
+  "expo": {
+    "name": "Krmeet",
+    "slug": "krmeet-mobile",
+    "version": "0.1.0",
+    "scheme": "krmeet",
+    "plugins": [
+      [
+        "react-native-maps",
+        {
+          "enableBackgroundLocationUpdates": true
+        }
+      ]
+    ],
+    "android": {
+      "package": "com.krmeet.app",
+      "config": {
+        "googleMaps": {
+          "apiKey": "TU_API_KEY_DE_GOOGLE_MAPS"
+        }
+      }
+    }
+  }
+}

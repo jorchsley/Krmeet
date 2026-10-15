@@ -1,3 +1,4 @@
+import { AppRegistry } from 'react-native';
 import React,{useEffect,useState} from 'react';
 import {ActivityIndicator,Button,Linking,SafeAreaView,Text,TextInput,View,StyleSheet} from 'react-native';
 import {NavigationContainer,DarkTheme} from '@react-navigation/native';
